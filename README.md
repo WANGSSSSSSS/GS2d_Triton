@@ -10,7 +10,7 @@ but the memory reduction is substansial! so i am very happy to share this repo t
 
 Currently, when rendering **100 256x256 images with 100 x 2000 GS**, my impl only consumes 1.2 GB on 2080ti, and after some helps from  my friend, the slow speed has been solved, my impl achieves **0.02s/iter**, (forward, backward, optimize step) . Because i tagged `num_renders` with `tl.constexpr` , but `num_renders` changes along with training, `triton.jit` will compile every related functions when function calls happened. 
 
-So feel free to use it! And leaving a star helps me job seeking(maybe) 
+So feel free to use it! And leaving a star helps my job seeking(maybe) 
 
 Feel free to leave some suggestion to further improve my codebase....
 
