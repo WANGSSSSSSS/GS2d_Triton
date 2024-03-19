@@ -52,7 +52,7 @@ class Gaussian2dRenderFunction(torch.autograd.Function):
                                 render_keys,
                                 render_values,
                                 )
-        print("duplicate time:", time.time()-t1)
+        # print("duplicate time:", time.time()-t1)
         sorted_keys, sorted_inds = torch.sort(render_keys, stable=True)
 
         # tips, reuse memory buffer and this faster
@@ -94,7 +94,7 @@ class Gaussian2dRenderFunction(torch.autograd.Function):
             sorted_values,
         )
         del render_keys, cumsum_areas
-        print("forward time:", time.time()-t)
+        # print("forward time:", time.time()-t)
         return images
 
     @staticmethod
@@ -142,7 +142,7 @@ class Gaussian2dRenderFunction(torch.autograd.Function):
             ptr_colors_grad=colors_grad,
             ptr_opacs_grad=opacs_grad,
         )
-        print("backward time:", time.time()-t)
+        # print("backward time:", time.time()-t)
         # print(grid)
         # print("color_grad:", colors_grad/ctx.TILE_W/ctx.TILE_H)
         # print("opacs_grad:", opacs_grad)

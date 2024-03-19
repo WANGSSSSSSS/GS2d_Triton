@@ -7,9 +7,9 @@ import time
 
 
 if __name__ == "__main__":
-    batch_size = 1
+    batch_size = 100
     device = "cuda"
-    num_gaussians = 10
+    num_gaussians = 2000 * 100
     image_h, image_w = 256, 256
     batch_ids = torch.randint(0, batch_size, (num_gaussians, ), device=device, dtype=torch.int8)
 
@@ -35,10 +35,10 @@ if __name__ == "__main__":
     optimer = torch.optim.Adam([parameters], lr=0.1)
     torch_targets = torch.zeros((batch_size, 4, image_h, image_w), requires_grad=False, device=device, dtype=torch.float16)
 
-    for j in range(image_w):
-        for i in range(image_h):
-            d = (i-128)**2 + (j-128)**2
-            torch_targets[:, 0, i, j] = torch.exp(-0.5*torch.tensor(d, device=device))
+    # for j in range(image_w):
+    #     for i in range(image_h):
+    #         d = (i-128)**2 + (j-128)**2
+    #         torch_targets[:, 0, i, j] = torch.exp(-0.5*torch.tensor(d, device=device))
 
     for i in range(1000):
         means = parameters[:, 0:2].sigmoid()*image_w#*0 + 32

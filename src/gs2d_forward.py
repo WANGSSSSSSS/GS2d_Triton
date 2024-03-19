@@ -34,11 +34,11 @@ def preprocess(means, sigmas, rhos, tile_h, tile_w, tile_num_h, tile_num_w):
 
 @triton.jit
 def duplicate_renders(
-        num_gaussians: tl.constexpr,
+        num_gaussians,
         num_per_thread: tl.constexpr,
         tile_num_h: tl.constexpr,
         tile_num_w: tl.constexpr,
-        num_renders: tl.constexpr,
+        num_renders,
         ptr_bids,
         ptr_area_sum,
         ptr_rects,
@@ -76,7 +76,7 @@ def duplicate_renders(
 
 @triton.jit
 def find_ranges(
-        renders_num: tl.constexpr,
+        renders_num,
         num_per_thread: tl.constexpr,
         ptr_render_keys,
         ptr_ranges,
@@ -107,8 +107,8 @@ def find_ranges(
 
 @triton.jit
 def render(
-        renders_num: tl.constexpr,
-        gaussians_num: tl.constexpr,
+        renders_num,
+        gaussians_num,
         tile_h: tl.constexpr,
         tile_w: tl.constexpr,
         tile_h_nums: tl.constexpr,

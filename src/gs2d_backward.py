@@ -4,8 +4,8 @@ import triton.language as tl
 
 @triton.jit
 def render_grad(
-        renders_num: tl.constexpr,
-        gaussians_num: tl.constexpr,
+        renders_num,
+        gaussians_num,
         tile_h: tl.constexpr,
         tile_w: tl.constexpr,
         tile_h_nums: tl.constexpr,
