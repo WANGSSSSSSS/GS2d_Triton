@@ -20,4 +20,4 @@ with rotation matrix:
 
 without GS prob:
 
-![](./assets/no_gs.png)
+![](./assets/no_gs.jpg)
