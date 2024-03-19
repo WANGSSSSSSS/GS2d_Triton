@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="huggingface" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="tvm" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="huggingface" project-jdk-type="Python SDK" />
 </project>

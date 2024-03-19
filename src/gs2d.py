@@ -93,6 +93,7 @@ class Gaussian2dRenderFunction(torch.autograd.Function):
             sorted_keys,
             sorted_values,
         )
+        del render_keys, cumsum_areas
         print("forward time:", time.time()-t)
         return images
 
