@@ -24,8 +24,8 @@ if __name__ == "__main__":
     render_cfg = dict(
         gaussians_per_thread=1,
         renders_per_thread=1,
-        forward_tile=2,
-        backward_tile=2,
+        forward_tile=4,
+        backward_tile=4,
         image_h=image_h,
         image_w=image_w,
         render_dtype=torch.float16,
@@ -42,19 +42,22 @@ if __name__ == "__main__":
 
     for i in range(1000):
         means = parameters[:, 0:2].sigmoid()*image_w#*0 + 32
-        sigmas = parameters[:, 2:4].sigmoid()*10
+        sigmas = parameters[:, 2:4].sigmoid()*100
         rhos = parameters[:, 4:5]
         opacs = parameters[:, 5:6].sigmoid()
         colors = parameters[:, 6:10].sigmoid()
 
         rs_time = time.time()
+        torch.cuda.synchronize()
         torch_images = Gaussian2dRender(**render_cfg)(batch_ids, means, sigmas, rhos, colors, opacs)
         loss = torch.nn.functional.mse_loss(torch_images, torch_targets).sum()*100
         loss.backward()
         optimer.step()
         optimer.zero_grad()
-        print("rs_time:", time.time()-rs_time, end="")
-        print("loss:", loss)
+        torch.cuda.synchronize()
+        print("rs_time:{:.2f}".format(time.time()-rs_time), end=", ")
+        print("loss:{:.2f}".format(loss.item()), end=", ")
+        print("{:.2f}".format(torch.cuda.max_memory_reserved()/1024/1024/1024), "GB")
 
     np_image = torch_images[0, :3].permute(1,2,0).detach().cpu().numpy()
     import matplotlib.pyplot as plt
